@@ -1,59 +1,118 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
 /**
-   Note: we're going to add the new method described below.
+   C++ version of code in Student.java and StudentTester.java
+   this version has a main program in the same file with the
+   class.
 
    Student class supports the following methods:
 
-   Student stud = new Student("Joe");  // has name "Joe" and total of 0
-   Student blank = new Student();     // has empty name and total of 0
+   Student stud("Joe");  // has name "Joe" and total of 0
+   Student blank;     // has empty name and total of 0
    
    String name = stud.getName();
 
    int total = stud.getTotalScore();
 
    stud.addQuiz(score);    // adds quiz score to the total for this student
-                                 
-   double avg = stud.getAverage();  // NEW METHOD gets avg score on quizzes
+   double avg = stud.getAverage();  // gets avg score on quizzes
 */
-public class Student {
+class Student {
+
+ public:
 
     // Creates a student with given name and score of 0
-    public Student(String name) {
-	theName = name;
-	totalScore = 0;
-	numQuizzes = 0;
-    }
+  Student(string name);
 
     // Creates a student with an empty name and score of 0
-    public Student() {
-	theName = "";
-	totalScore = 0;
-	numQuizzes = 0;
-    }
+  Student();
 
-    public String getName() {
-	return theName;
-    }
 
-    public int getTotalScore() {
-	return totalScore;
-    }
+  // a const method is an accessor; it doesn't modify the object
+  // you call it on.
+  string getName();
 
-    public void addQuiz(int score) {
-	totalScore += score;
-	numQuizzes++;
-    }
+  int getTotalScore() const;
 
-    public double getAverage() {
-	if (numQuizzes == 0) {
-	    return 0.0;
-	}
+  void addQuiz(int score);
 
-	double average = (double) totalScore / numQuizzes;
-	return average;
-    }
+  double getAverage() const;
 
-    private String theName;
-    private int totalScore;
-    private int numQuizzes;
 
+ private: 
+  string theName;
+  int totalScore;
+  int numQuizzes;
+};
+
+
+Student::Student(string name) {
+  theName = name;
+  totalScore = 0;
+  numQuizzes = 0;
+}
+
+
+Student::Student() {
+  theName = "";
+  totalScore = 0;
+  numQuizzes = 0;
+}
+
+string Student::getName() const {
+  return theName;
+}
+
+int Student::getTotalScore() const {
+  return totalScore;
+  // return this->totalScore;
+}
+
+void Student::addQuiz(int score) {
+  totalScore += score;
+  numQuizzes++;
+}
+
+double Student::getAverage() const {
+  if (numQuizzes == 0) {
+    return 0;
+  }
+  else {
+    return totalScore / (double)numQuizzes;
+  }
+}
+
+
+void printStudent(const Student & student) {
+  cout << student.getName() << " " << student.getTotalScore()
+       <<  " " << student.getAverage() << endl;
+}
+
+
+
+// test the Student class
+
+int main() {
+
+  Student stud1("Joe");
+  printStudent(stud1);
+
+  Student stud2;
+  printStudent(stud2);
+
+  stud1.addQuiz(10);
+  stud1.addQuiz(8);
+  stud1.addQuiz(9);
+  stud1.addQuiz(7);
+  stud1.addQuiz(10);
+
+  cout << "Expected results for total: 44" << endl;
+  cout << "Expected results for avg: 8.8" << endl;
+
+  printStudent(stud1);
+
+  return 0;
 }
