@@ -87,6 +87,7 @@ double Student::getAverage() const {
 
 
 void printStudent(const Student & student) {
+   // if getName() or getTotalScore() is not const, printStudent cannot use const here
   cout << student.getName() << " " << student.getTotalScore()
        <<  " " << student.getAverage() << endl;
 }
